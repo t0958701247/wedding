@@ -734,8 +734,8 @@
         </svg>
       </div>
       <h3 class="font-cormorant italic text-3xl text-morandi-gold font-normal mb-2">Thank You</h3>
-      <h4 class="text-lg font-medium text-morandi-charcoal tracking-widest mb-3">回函已成功送出</h4>
-      <p class="text-sm text-morandi-muted leading-relaxed mb-6 font-light">
+      <h4 id="modalTitle" class="text-lg font-medium text-morandi-charcoal tracking-widest mb-3">回函已成功送出</h4>
+      <p id="modalMessage" class="text-sm text-morandi-muted leading-relaxed mb-6 font-light">
         誠摯感謝您的祝福與回覆！<br>
         我們非常期待在 <span class="nowrap-text font-medium text-morandi-charcoal">2027年4月18日</span> 與您攜手共慶這難忘的幸福篇章。
       </p>
@@ -963,20 +963,32 @@
         btnText.innerText = '確認送出出席回函 SUBMIT';
         btnSpinner.classList.add('hidden');
 
+        const isAttending = attendanceSelect.value === '確定出席';
+
         form.reset();
         checkRelationshipOther();
         checkGuestOther();
         checkDietOther();
         checkFormConditions();
-        openModal();
+        openModal(isAttending);
       }, 1200);
     });
 
     // Modal Control
     const successModal = document.getElementById('successModal');
     const modalBox = document.getElementById('modalBox');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalMessage = document.getElementById('modalMessage');
 
-    function openModal() {
+    function openModal(isAttending = true) {
+      if (isAttending) {
+        modalTitle.innerText = '回函已成功送出';
+        modalMessage.innerHTML = '誠摯感謝您的祝福與回覆！<br>我們非常期待在 <span class="nowrap-text font-medium text-morandi-charcoal">2027年4月18日</span> 與您攜手共慶這難忘的幸福篇章。';
+      } else {
+        modalTitle.innerText = '感謝您的溫暖祝福';
+        modalMessage.innerHTML = '誠摯感謝您的心意與溫馨祝福！<br>雖然這次未能親臨現場相聚，但您的祝福我們已深深收到，祝願您一切順心如意、平安美好。';
+      }
+
       successModal.classList.remove('opacity-0', 'pointer-events-none');
       modalBox.classList.remove('scale-95');
       modalBox.classList.add('scale-100');
