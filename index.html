@@ -146,16 +146,40 @@
   </header>
 
   <section id="hero" class="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
-    <!-- Background Image -->
-    <div class="absolute inset-0 z-0">
+    <!-- Background Image Slideshow -->
+    <div class="absolute inset-0 z-0 overflow-hidden" id="heroSlideshow">
       <img 
-        src="https://i.postimg.cc/k5JhDY9k/1086141.jpg" 
-        alt="David & Linda 婚紗封面照" 
-        class="w-full h-full object-cover object-center filter brightness-[0.92]"
+        src="https://i.postimg.cc/668yXsX9/Gemini-Generated-Image-92a29192a29192a2-kao-bei-2.png" 
+        alt="David & Linda 婚紗照 1" 
+        class="slide-img absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.92] transition-opacity duration-[1500ms] ease-in-out opacity-100"
         loading="eager"
       />
-      <div class="absolute inset-0 bg-gradient-to-t from-morandi-ivory via-black/25 to-black/35"></div>
-      <div class="absolute inset-0 bg-morandi-gold/10 mix-blend-multiply"></div>
+      <img 
+        src="https://i.postimg.cc/k5JhDY9k/1086141.jpg" 
+        alt="David & Linda 婚紗照 2" 
+        class="slide-img absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.92] transition-opacity duration-[1500ms] ease-in-out opacity-0 pointer-events-none"
+        loading="lazy"
+      />
+      <img 
+        src="https://i.postimg.cc/y8s1Wtw6/S-516119.jpg" 
+        alt="David & Linda 婚紗照 3" 
+        class="slide-img absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.92] transition-opacity duration-[1500ms] ease-in-out opacity-0 pointer-events-none"
+        loading="lazy"
+      />
+      <img 
+        src="https://i.postimg.cc/htsSmMnc/WYS-0756.jpg" 
+        alt="David & Linda 婚紗照 4" 
+        class="slide-img absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.92] transition-opacity duration-[1500ms] ease-in-out opacity-0 pointer-events-none"
+        loading="lazy"
+      />
+      <img 
+        src="https://i.postimg.cc/jScsfvTY/WYS-0813.jpg" 
+        alt="David & Linda 婚紗照 5" 
+        class="slide-img absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.92] transition-opacity duration-[1500ms] ease-in-out opacity-0 pointer-events-none"
+        loading="lazy"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-morandi-ivory via-black/25 to-black/35 pointer-events-none"></div>
+      <div class="absolute inset-0 bg-morandi-gold/10 mix-blend-multiply pointer-events-none"></div>
     </div>
 
     <!-- Hero Content -->
@@ -767,6 +791,23 @@
 
   <script>
     const GOOGLE_FORM_ACTION_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeIgSUbaE8UIRlkGL6yq3cmb1-IEsl1EufbDVHoMyoxARFPuw/formResponse";
+
+    // 0. Hero Background Cross-fade Slideshow (定格 3 秒，1.5 秒漸變)
+    const slideImgs = document.querySelectorAll('#heroSlideshow .slide-img');
+    let currentSlide = 0;
+
+    if (slideImgs.length > 1) {
+      setInterval(() => {
+        const nextSlide = (currentSlide + 1) % slideImgs.length;
+        slideImgs[currentSlide].classList.remove('opacity-100');
+        slideImgs[currentSlide].classList.add('opacity-0', 'pointer-events-none');
+
+        slideImgs[nextSlide].classList.remove('opacity-0', 'pointer-events-none');
+        slideImgs[nextSlide].classList.add('opacity-100');
+
+        currentSlide = nextSlide;
+      }, 4500); // 3000ms 定格 + 1500ms 漸變週期
+    }
 
     // 1. Precise Countdown Timer
     const weddingDate = new Date('2027-04-18T11:30:00+08:00').getTime();
