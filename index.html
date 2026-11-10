@@ -790,9 +790,21 @@
   </footer>
 
   <script>
+    // 0. Ensure page always opens at top (#hero) and prevent auto-jump
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+    window.scrollTo(0, 0);
+    window.addEventListener('load', () => {
+      window.scrollTo(0, 0);
+    });
+
     const GOOGLE_FORM_ACTION_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeIgSUbaE8UIRlkGL6yq3cmb1-IEsl1EufbDVHoMyoxARFPuw/formResponse";
 
-    // 0. Hero Background Cross-fade Slideshow (定格 3 秒，1.5 秒漸變)
+    // Hero Background Cross-fade Slideshow (定格 3 秒，1.5 秒漸變)
     const slideImgs = document.querySelectorAll('#heroSlideshow .slide-img');
     let currentSlide = 0;
 
@@ -881,7 +893,6 @@
         otherRelationshipWrapper.classList.remove('hidden');
         otherRelationshipInput.disabled = false;
         otherRelationshipInput.setAttribute('required', 'required');
-        otherRelationshipInput.focus();
       } else {
         otherRelationshipWrapper.classList.add('hidden');
         otherRelationshipInput.removeAttribute('required');
@@ -897,7 +908,6 @@
         otherGuestWrapper.classList.remove('hidden');
         otherGuestInput.disabled = false;
         otherGuestInput.setAttribute('required', 'required');
-        otherGuestInput.focus();
       } else {
         otherGuestWrapper.classList.add('hidden');
         otherGuestInput.removeAttribute('required');
@@ -913,7 +923,6 @@
         otherDietWrapper.classList.remove('hidden');
         otherDietInput.disabled = false;
         otherDietInput.setAttribute('required', 'required');
-        otherDietInput.focus();
       } else {
         otherDietWrapper.classList.add('hidden');
         otherDietInput.removeAttribute('required');
